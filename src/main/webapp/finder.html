@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息检索</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: cornsilk; /* 背景色 */
+        }
+        /*.container {*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*    background-color: blue; !* 上层背景色 *!*/
+        /*    padding: 20px;*/
+        /*}*/
+        input {
+            width: 70%;
+
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            background-color: darkorange; /* 下层背景色 */
+            width: 60%;
+            height: 20px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function search() {
+            var input = document.getElementById("query").value;
+            fetch("/search", {
+                method: "POST",
+                body: JSON.stringify({ query: input }),
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerHTML = "";
+                    data.forEach(item => {
+                        var p = document.createElement("p");
+                        p.textContent = item.name + " - " + item.phone + " - " + item.email;
+                        document.getElementById("result").appendChild(p);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="query">
+<button onclick="search()">检索</button>
+<div id="result"></div>
+</body>
+</html>
