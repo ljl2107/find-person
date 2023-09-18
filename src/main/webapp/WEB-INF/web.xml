@@ -18,4 +18,19 @@
         <url-pattern>/find</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>get-all</servlet-name>
+        <servlet-class>com.example.findperson.GetAllServlet</servlet-class>
+        <init-param>
+            <param-name>contacts</param-name>
+            <param-value>1.xlsx，2.xlsx</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>get-all</servlet-name>
+        <url-pattern>/getall</url-pattern>
+    </servlet-mapping>
+
 </web-app>
