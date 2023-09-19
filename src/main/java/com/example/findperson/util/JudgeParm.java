@@ -1,5 +1,10 @@
 package com.example.findperson.util;
 
+import com.example.findperson.Student;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -8,8 +13,8 @@ package com.example.findperson.util;
  * @Description: com.example.findperson.util
  */
 public class JudgeParm {
-//    0-5 决定传入的参数是什么，1则说明有，
-    public Integer[] judgeParm;
+//
+    public static List<Student> judgeParm = new ArrayList<Student>();
     public static boolean isName(String item) {
         // 假设姓名只包含中文或英文字符
         return item.matches("^[\\u4e00-\\u9fa5a-zA-Z]+$");

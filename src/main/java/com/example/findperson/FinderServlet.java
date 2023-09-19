@@ -1,12 +1,10 @@
 package com.example.findperson;
 
-import com.example.findperson.util.JudgeParm;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +24,7 @@ import java.util.*;
 //@WebServlet(name = "finder", value = "/find")
 public class FinderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static Student webstu = new Student();
+    private static List<Map<String,Object>> retstudent = new ArrayList<Map<String,Object>>();
     // contact table
     private List<Map<String, Object>> contacts = new ArrayList<Map<String, Object>>();
 
@@ -124,24 +122,43 @@ public class FinderServlet extends HttpServlet {
         String str = "<html><head>" +
                 "<title>条件获取学生信息</title>" +
                 "</head><body>\n";
-//        System.out.println(request.getParameterNames());
-//        System.out.println(request.getParameter("queryparm"));
         String strs = request.getParameter("queryparm");
 
         strs = strs.trim();
         strs = strs.replace('，', ',');
         String[] strs_arr = strs.split(",");
 
-        int i = 0;
-        for (Map<String,Object> students:contacts){
-            System.out.println(students.get(5));
-            if (students.get("email").equals(strs_arr[0])){
-                str += "<h1>" + students +"</h1>";
+/**
+ * record.put("id", id);
+*                     record.put("name", name);
+*                     record.put("gender", null);
+*                     record.put("class", strClass);
+*                     record.put("mobile", mobile);
+*                     record.put("email", email);
+ */
+        for (Map<String,Object> students:contacts) {
+            if (students.get("id").toString().equals(strs_arr[0])){
+                retstudent.add(students);
             }
-//            if (JudgeParm.isMail(students.get(5).toString())){
-//
-//                System.out.println("111111");
+            if (students.get("name").equals(strs_arr[1])){
+                retstudent.add(students);
+            }
+//            if (students.get("gender").equals(strs_arr[2])){
+//                retstudent.add(students);
 //            }
+            if (students.get("class").equals(strs_arr[3])){
+                retstudent.add(students);
+            }
+            if (students.get("mobile").equals(strs_arr[4])){
+                retstudent.add(students);
+            }
+            if (students.get("email").equals(strs_arr[5])){
+                retstudent.add(students);
+            }
+        }
+
+        for(Object stu:retstudent) {
+            str += "<h1>" + stu + "</h1>";
         }
         str += "\n</body></html>";
         out.write(str);

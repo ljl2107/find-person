@@ -54,8 +54,15 @@
     </style>
 </head>
 <body>
+<!--
+ record.put("id", id);
+                    record.put("name", name);
+                    record.put("gender", null);
+                    record.put("class", strClass);
+                    record.put("mobile", mobile);
+                    record.put("email", email);-->
 <form action="find" method="get">
-    关键字符（请用空格分割）<input type="text" id="query" name="queryparm">
+    关键字符（请用逗号分割,请按照学号、姓名、性别、班级、电话、邮箱书写，无值留空）<input type="text" id="query" name="queryparm">
     <button type="submit">检索</button>
 </form>
     <div id="result"></div>
