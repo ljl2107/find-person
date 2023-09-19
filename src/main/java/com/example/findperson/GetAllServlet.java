@@ -123,73 +123,45 @@ public class GetAllServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         //const message = contacts;
-        String res = "<html><body><table>\n";
-        res = res+"<thead>\n" +
+        String res = "<html><head>" +
+                "<title>获取所有学生信息</title>" +
+                "</head><body><table>\n";
+        res = res+"<thead style+\"background-color: #f2f2f2;\">\n" +
                 "<tr>\n" +
-                "<th>#no</th>\n" +
-                "<th>学号</th>\n" +
-                "<th>名称（包含性别）</th>\n" +
-                "<th>班级</th>\n" +
-                "<th>移动电话</th>\n" +
-                "<th>邮箱</th>\n" +
+                "<th style=\"border: 1px solid;\">#no</th>\n" +
+                "<th style=\"border: 1px solid;\">学号</th>\n" +
+                "<th style=\"border: 1px solid;\">名称（包含性别）</th>\n" +
+                "<th style=\"border: 1px solid;\">班级</th>\n" +
+                "<th style=\"border: 1px solid;\">移动电话</th>\n" +
+                "<th style=\"border: 1px solid;\">邮箱</th>\n" +
                 "</tr>\n" +
                 "</thead>";
 
-        res += "<tbody>\n";
+        res += "<tbody style=\"font-size: 14px;\n" +
+                "line-height: 1.5;background:#ffffdf\">\n";
         Integer no = 0;
         for (Map<String,Object> o:contacts) {
             res += "<tr>\n";
-                res += "<td>"+no+++"</td>\n";
-                res += "<td>"+o.get("id")+"</td>\n";
-                res += "<td>"+o.get("name")+"</td>\n";
-                res += "<td>"+o.get("class")+"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+no+++"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+o.get("id")+"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+o.get("name")+"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+o.get("class")+"</td>\n";
                 if (o.get("mobile")==""){
-                    res += "<td>"+"空白"+"</td>\n";
+                    res += "<td style=\"border: 1px solid;\">"+"空白"+"</td>\n";
                 }
                 else
-                    res += "<td>"+o.get("mobile")+"</td>\n";
+                    res += "<td style=\"border: 1px solid;\">"+o.get("mobile")+"</td>\n";
                 if (o.get("email")=="")
-                    res += "<td>"+"空白"+"</td>\n";
+                    res += "<td style=\"border: 1px solid;\">"+"空白"+"</td>\n";
                 else
-                    res += "<td>"+o.get("email")+"</td>\n";
+                    res += "<td style=\"border: 1px solid;\">"+o.get("email")+"</td>\n";
         }
         res += "</tbody>\n";
-//        Enumeration paramNames = request.getParameterNames();
-//        System.out.println(paramNames);
-//        while (paramNames.hasMoreElements()){
-//            String paramName = (String) paramNames.nextElement();
-//            res += "<tr><td>" + paramName + "</td>\n";
-//            String[] paramValues = request.getParameterValues(paramName);
-//            System.out.println(paramValues);
-////
-//            if (paramValues.length == 1){
-//                String paramValue = paramValues[0];
-//                if (paramValue.length() == 0){
-//                    res += "<td><i>没有值</i></td>";
-//                }
-//                else {
-//                    res += "<td>" + paramValue + "</td>";
-//                }
-//            }
-//            else {
-//                res += "<td><ul>";
-//                for (int i = 0;i < paramValues.length; i++){
-//                    res += "<li>" + paramValues[i];
-//                }
-//                res += "</ul></td>";
-//            }
-//            res += "</tr>";
-//        }
+
 
         res = res + "\n</table>\n</body></html>";
         out.println(res);
 
-
-//        response.sendRedirect("hello.html");
-//        System.out.println("Contacts:");
-//        System.out.println(contacts);
-//        System.out.println(request.getParameterNames());
-//        response.sendRedirect("finder.html");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.findperson;
 
+import com.example.findperson.util.JudgeParm;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,14 +26,14 @@ import java.util.*;
 //@WebServlet(name = "finder", value = "/find")
 public class FinderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private static Student webstu = new Student();
     // contact table
     private List<Map<String, Object>> contacts = new ArrayList<Map<String, Object>>();
 
     public void init() throws ServletException {
         try {
             String files = getInitParameter("contacts");
-// 这一步是将文件名中间的中文逗号转化为西文逗号，但是好无语，多此一举？
+
             files = files.trim();
             files = files.replace('，', ',');
             String[] file_name_array = files.split(",");
@@ -120,79 +121,40 @@ public class FinderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        //const message = contacts;
-        String res = "<html><body><table>\n";
-        res = res+"<thead>\n" +
-                "<tr>\n" +
-                "<th>#no</th>\n" +
-                "<th>学号</th>\n" +
-                "<th>名称（包含性别）</th>\n" +
-                "<th>班级</th>\n" +
-                "<th>移动电话</th>\n" +
-                "<th>邮箱</th>\n" +
-                "</tr>\n" +
-                "</thead>";
-
-        res += "<tbody>\n";
-        Integer no = 0;
-        for (Map<String,Object> o:contacts) {
-            res += "<tr>\n";
-                res += "<td>"+no+++"</td>\n";
-                res += "<td>"+o.get("id")+"</td>\n";
-                res += "<td>"+o.get("name")+"</td>\n";
-                res += "<td>"+o.get("class")+"</td>\n";
-                if (o.get("mobile")==""){
-                    res += "<td>"+"空白"+"</td>\n";
-                }
-                else
-                    res += "<td>"+o.get("mobile")+"</td>\n";
-                if (o.get("email")=="")
-                    res += "<td>"+"空白"+"</td>\n";
-                else
-                    res += "<td>"+o.get("email")+"</td>\n";
-        }
-        res += "</tbody>\n";
-//        Enumeration paramNames = request.getParameterNames();
-//        System.out.println(paramNames);
-//        while (paramNames.hasMoreElements()){
-//            String paramName = (String) paramNames.nextElement();
-//            res += "<tr><td>" + paramName + "</td>\n";
-//            String[] paramValues = request.getParameterValues(paramName);
-//            System.out.println(paramValues);
-////
-//            if (paramValues.length == 1){
-//                String paramValue = paramValues[0];
-//                if (paramValue.length() == 0){
-//                    res += "<td><i>没有值</i></td>";
-//                }
-//                else {
-//                    res += "<td>" + paramValue + "</td>";
-//                }
-//            }
-//            else {
-//                res += "<td><ul>";
-//                for (int i = 0;i < paramValues.length; i++){
-//                    res += "<li>" + paramValues[i];
-//                }
-//                res += "</ul></td>";
-//            }
-//            res += "</tr>";
-//        }
-
-        res = res + "\n</table>\n</body></html>";
-        out.println(res);
-
-
-//        response.sendRedirect("hello.html");
-//        System.out.println("Contacts:");
-//        System.out.println(contacts);
+        String str = "<html><head>" +
+                "<title>条件获取学生信息</title>" +
+                "</head><body>\n";
 //        System.out.println(request.getParameterNames());
+//        System.out.println(request.getParameter("queryparm"));
+        String strs = request.getParameter("queryparm");
+
+        strs = strs.trim();
+        strs = strs.replace('，', ',');
+        String[] strs_arr = strs.split(",");
+
+        int i = 0;
+        for (Map<String,Object> students:contacts){
+            System.out.println(students.get(5));
+            if (students.get("email").equals(strs_arr[0])){
+                str += "<h1>" + students +"</h1>";
+            }
+//            if (JudgeParm.isMail(students.get(5).toString())){
+//
+//                System.out.println("111111");
+//            }
+        }
+        str += "\n</body></html>";
+        out.write(str);
 //        response.sendRedirect("finder.html");
     }
 
+    public List<Map<String,Object>> queryInfo(){
+        return new ArrayList<>();
+    }
+
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("访问到了Finder的post");
-        doGet(req, resp);
     }
 }
