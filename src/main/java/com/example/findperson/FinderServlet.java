@@ -98,7 +98,7 @@ public class FinderServlet extends HttpServlet {
                     Map<String, Object> record = new HashMap<String, Object>();
                     record.put("id", id);
                     record.put("name", name);
-                    record.put("gender", null);
+                    record.put("gender", "男");//默认为男
                     record.put("class", strClass);
                     record.put("mobile", mobile);
                     record.put("email", email);
@@ -121,12 +121,12 @@ public class FinderServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String str = "<html><head>" +
                 "<title>条件获取学生信息</title>" +
-                "</head><body>\n";
-        String strs = request.getParameter("queryparm");
+                "</head><body><table>\n";
+        String strings = request.getParameter("queryparm");
 
-        strs = strs.trim();
-        strs = strs.replace('，', ',');
-        String[] strs_arr = strs.split(",");
+        strings = strings.trim();
+        strings = strings.replace('，', ',');
+        String[] strings_arr = strings.split(",");
 
 /**
  * record.put("id", id);
@@ -136,31 +136,73 @@ public class FinderServlet extends HttpServlet {
 *                     record.put("mobile", mobile);
 *                     record.put("email", email);
  */
+
         for (Map<String,Object> students:contacts) {
-            if (students.get("id").toString().equals(strs_arr[0])){
+            Integer size_parm = strings_arr.length;
+            if (size_parm-- > 0 && students.get("id").toString().equals(strings_arr[0])){
                 retstudent.add(students);
             }
-            if (students.get("name").equals(strs_arr[1])){
+            if (students.get("name").toString().endsWith("*")){
+                students.put("gender","女");
+                String newname = students.get("name").toString().replace("*","");//处理检索女生名字后需要*的问题
+                students.put("name",newname);
+            }
+            if (size_parm-- > 0 && students.get("name").equals(strings_arr[1])){
                 retstudent.add(students);
             }
-//            if (students.get("gender").equals(strs_arr[2])){
-//                retstudent.add(students);
-//            }
-            if (students.get("class").equals(strs_arr[3])){
+
+            if (size_parm-- > 0 && students.get("gender").equals(strings_arr[2])){
                 retstudent.add(students);
             }
-            if (students.get("mobile").equals(strs_arr[4])){
+            if (size_parm-- > 0 && students.get("class").equals(strings_arr[3])){
                 retstudent.add(students);
             }
-            if (students.get("email").equals(strs_arr[5])){
+            if (size_parm-- > 0 && students.get("mobile").equals(strings_arr[4])){
+                retstudent.add(students);
+            }
+            if (size_parm-- > 0 && students.get("email").equals(strings_arr[5])){
                 retstudent.add(students);
             }
         }
 
-        for(Object stu:retstudent) {
-            str += "<h1>" + stu + "</h1>";
+        str = str+"<thead style+\"background-color: #f2f2f2;\">\n" +
+                "<tr>\n" +
+                "<th style=\"border: 1px solid;\">#no</th>\n" +
+                "<th style=\"border: 1px solid;\">学号</th>\n" +
+                "<th style=\"border: 1px solid;\">名称</th>\n" +
+                "<th style=\"border: 1px solid;\">性别</th>\n" +
+                "<th style=\"border: 1px solid;\">班级</th>\n" +
+                "<th style=\"border: 1px solid;\">移动电话</th>\n" +
+                "<th style=\"border: 1px solid;\">邮箱</th>\n" +
+                "</tr>\n" +
+                "</thead>";
+
+        str += "<tbody style=\"font-size: 14px;\n" +
+                "line-height: 1.5;background:#ffffdf\">\n";
+        Integer no = 1;
+        for (Map<String,Object> o:retstudent) {
+            str += "<tr>\n";
+            str += "<td style=\"border: 1px solid;\">"+no+++"</td>\n";
+            str += "<td style=\"border: 1px solid;\">"+o.get("id")+"</td>\n";
+            str += "<td style=\"border: 1px solid;\">"+o.get("name").toString().replace("*","")+"</td>\n";
+            str += "<td style=\"border: 1px solid;\">"+o.get("gender")+"</td>\n";
+            str += "<td style=\"border: 1px solid;\">"+o.get("class")+"</td>\n";
+            if (o.get("mobile")==""){
+                str += "<td style=\"border: 1px solid;\">"+"空白"+"</td>\n";
+            }
+            else
+                str += "<td style=\"border: 1px solid;\">"+o.get("mobile")+"</td>\n";
+            if (o.get("email")=="")
+                str += "<td style=\"border: 1px solid;\">"+"空白"+"</td>\n";
+            else
+                str += "<td style=\"border: 1px solid;\">"+o.get("email")+"</td>\n";
         }
-        str += "\n</body></html>";
+        str += "</tbody>\n";
+//        for(Object stu:retstudent) {
+//            str += "<h1>" + stu + "</h1>";
+//        }
+        str += "\n</table></body></html>";
+        retstudent.clear();//debug，不清除会导致多次检索时的重复数据
         out.write(str);
 //        response.sendRedirect("finder.html");
     }

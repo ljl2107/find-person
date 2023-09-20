@@ -101,7 +101,7 @@ public class GetAllServlet extends HttpServlet {
                     Map<String, Object> record = new HashMap<String, Object>();
                     record.put("id", id);
                     record.put("name", name);
-                    record.put("gender", null);
+                    record.put("gender", "男");//我从未在此刻如此明白空值如此令人讨厌
                     record.put("class", strClass);
                     record.put("mobile", mobile);
                     record.put("email", email);
@@ -130,7 +130,8 @@ public class GetAllServlet extends HttpServlet {
                 "<tr>\n" +
                 "<th style=\"border: 1px solid;\">#no</th>\n" +
                 "<th style=\"border: 1px solid;\">学号</th>\n" +
-                "<th style=\"border: 1px solid;\">名称（包含性别）</th>\n" +
+                "<th style=\"border: 1px solid;\">名称</th>\n" +
+                "<th style=\"border: 1px solid;\">性别</th>\n" +
                 "<th style=\"border: 1px solid;\">班级</th>\n" +
                 "<th style=\"border: 1px solid;\">移动电话</th>\n" +
                 "<th style=\"border: 1px solid;\">邮箱</th>\n" +
@@ -139,12 +140,16 @@ public class GetAllServlet extends HttpServlet {
 
         res += "<tbody style=\"font-size: 14px;\n" +
                 "line-height: 1.5;background:#ffffdf\">\n";
-        Integer no = 0;
+        Integer no = 1;
         for (Map<String,Object> o:contacts) {
+            if (o.get("name").toString().endsWith("*")){
+                o.put("gender","女");
+            }
             res += "<tr>\n";
                 res += "<td style=\"border: 1px solid;\">"+no+++"</td>\n";
                 res += "<td style=\"border: 1px solid;\">"+o.get("id")+"</td>\n";
-                res += "<td style=\"border: 1px solid;\">"+o.get("name")+"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+o.get("name").toString().replace("*","")+"</td>\n";
+                res += "<td style=\"border: 1px solid;\">"+o.get("gender")+"</td>\n";
                 res += "<td style=\"border: 1px solid;\">"+o.get("class")+"</td>\n";
                 if (o.get("mobile")==""){
                     res += "<td style=\"border: 1px solid;\">"+"空白"+"</td>\n";
