@@ -1,3 +1,7 @@
+![Atakemaru_desktop.png](https://fastly.jsdelivr.net/gh/ljl2107/imageshack/Anime/Atakemaru_desktop.png)
+![Static Badge](https://img.shields.io/badge/2.7.8_spring-boot-blue)
+![Static Badge](https://img.shields.io/badge/5.9.2_antd-green)
+
 # 开发计划
 1. *[x] 目前已经完成了初步的功能实现
 2. *[ ] servlet的字符串拼接返回太折磨人，对于样式设计和未来开发不友好，计划剔除。
@@ -12,6 +16,7 @@
 11. *[ ] 个人身份验证模块，额，邮件？
 12. *[ ] 进行图片的匹配，计划采用华为云的人脸识别接口或者是YOLOv5模型实现，但这个应该会放在最后。
 13. *[ ] 多端运行，手机，微信，电脑，，，额，有点头疼
+14. *[x] 前后端模块的建立
 
 # J2EE 上机作业2023
 ## 第一次上机作业（2022）
