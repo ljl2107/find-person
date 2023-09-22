@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Calendar } from 'antd';
+import {Provider} from 'react-redux'
+import {store} from "./redux/store";
+import IndexRouter from "./router/IndexRouter";
 function App() {
-  const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
-  };
+
   return (
-      <Calendar onPanelChange={onPanelChange} />
+      <Provider store={store}>
+        <IndexRouter></IndexRouter>
+      </Provider>
   );
 }
 
