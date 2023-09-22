@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-    private String no; // 学号
+    private String sid; // 学号
     private String name; // 名称
     private String gender; // 性别
     private String className; // 班级

@@ -174,4 +174,6 @@ public class GetAllServlet extends HttpServlet {
         System.out.println("访问到了Finder的post");
         doGet(req, resp);
     }
+
+
 }
