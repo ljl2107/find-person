@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {
     HomeFilled,
-    AppstoreOutlined
+    AppstoreOutlined,
+    SearchOutlined,
+    BulbOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import {connect} from "react-redux";
@@ -13,11 +15,9 @@ const { Header, Sider} = Layout;
 
 const iconList = {
     '/home': <HomeFilled />,
-    '/user-manage': <AppstoreOutlined />,
-    '/right-manage': <AppstoreOutlined />,
-    '/audit-manage': <AppstoreOutlined />,
-    '/news-manage': <AppstoreOutlined />,
-    '/publish-manage': <AppstoreOutlined />
+    '/getall': <AppstoreOutlined />,
+    '/find': <SearchOutlined />,
+    '/about': <BulbOutlined />
 }
 
 function SideMenu(props) {
@@ -29,7 +29,6 @@ function SideMenu(props) {
     const selectKeys = [location.pathname]
     const openKeys = ["/" + location.pathname.split("/")[1]]
     useEffect(() => {
-        // TODO 目前使用apifox的mock 后续请后端返回应有的数据 详细见apifox
         axios.get("http://localhost:8080/sidemenu").then(res => {
             console.log(res.data)
             console.log(Array.isArray(res.data))
@@ -80,9 +79,7 @@ function SideMenu(props) {
                         {renderMenu(menu)}
                     </Menu>
                 </div>
-
             </div>
-
         </Sider>
     );
 }

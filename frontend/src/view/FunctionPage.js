@@ -4,6 +4,7 @@ import SideMenu from "../components/sndbox/SideMenu";
 import TopHeader from "../components/sndbox/TopHeader";
 // css
 import '../source/css/FunctionPage.css';
+import ContentRouter from "../components/sndbox/ContentRouter";
 const {Content } = Layout;
 // 功能性页面 计划包括查找，插入等功能
 function FunctionPage(props) {
@@ -21,7 +22,7 @@ function FunctionPage(props) {
                         overflow: "auto"
                     }}
                 >
-                    Content
+                    {/*<ContentRouter></ContentRouter>*/}
                 </Content>
             </Layout>
         </Layout>
