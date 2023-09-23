@@ -30,7 +30,7 @@ function SideMenu(props) {
     const openKeys = ["/" + location.pathname.split("/")[1]]
     useEffect(() => {
         // TODO 目前使用apifox的mock 后续请后端返回应有的数据 详细见apifox
-        axios.get("http://127.0.0.1:4523/m1/3338265-0-default/getsidemenu").then(res => {
+        axios.get("http://localhost:8080/sidemenu").then(res => {
             console.log(res.data)
             console.log(Array.isArray(res.data))
             setMenu(res.data)
