@@ -22,7 +22,7 @@ function FunctionPage(props) {
                         overflow: "auto"
                     }}
                 >
-                    {/*<ContentRouter></ContentRouter>*/}
+                    <ContentRouter></ContentRouter>
                 </Content>
             </Layout>
         </Layout>

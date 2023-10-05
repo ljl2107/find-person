@@ -14,9 +14,8 @@ import SubMenu from "antd/es/menu/SubMenu";
 const { Header, Sider} = Layout;
 
 const iconList = {
-    '/home': <HomeFilled />,
-    '/getall': <AppstoreOutlined />,
-    '/find': <SearchOutlined />,
+    '/student-manage/list': <AppstoreOutlined />,
+    '/student-manage/find': <SearchOutlined />,
     '/about': <BulbOutlined />
 }
 
@@ -30,8 +29,8 @@ function SideMenu(props) {
     const openKeys = ["/" + location.pathname.split("/")[1]]
     useEffect(() => {
         axios.get("http://localhost:8080/sidemenu").then(res => {
-            console.log(res.data)
-            console.log(Array.isArray(res.data))
+            // console.log(res.data)
+            // console.log(Array.isArray(res.data))
             setMenu(res.data)
         })
     }, [])
