@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Button, Radio,Modal, Space, Table, Tag} from "antd";
+import {Button, Radio, Modal, Space, Table, Tag, message} from "antd";
 import {DeleteTwoTone, ExclamationCircleOutlined, UnorderedListOutlined} from "@ant-design/icons";
 
 const { confirm } = Modal;
@@ -27,7 +27,20 @@ function StudentList(props) {
     };
     const deleteMethod = (item) => {
         setstudentList(studentList.filter(data => data.sid !== item.sid))//删除就是覆盖
-        // axios.delete(`http://localhost:8000/users/${item.id}`)
+        axios.delete(`http://localhost:8080/student-manage/delete`,
+            {
+                params:{
+                    sid:item.sid
+                }
+            })
+            .then(res => {
+                console.log("删除",res)
+                if (res.data==1){
+                    message.success("删除成功！",5)
+                }else {
+                    message.error("删除失败！",5);
+                }
+            })
     }
     //----------------delete end---------------------------//
     //----------------update start 删除按钮旁边的按钮---------------------------//
