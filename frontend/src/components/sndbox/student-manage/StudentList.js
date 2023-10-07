@@ -1,12 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import axios from "axios";
 import {Button, Radio, Modal, Space, Table, Tag, message} from "antd";
 import {DeleteTwoTone, ExclamationCircleOutlined, UnorderedListOutlined} from "@ant-design/icons";
+import StudentForm from "../../stu-manage/StudentForm";
 
 const { confirm } = Modal;
 
 function StudentList(props) {
-    const [studentList, setstudentList] = useState([])//
+    const [studentList, setstudentList] = useState([])
+    const [isAddVisible, setisAddVisible] = useState(false)
+
+    const addForm = useRef(null)
 
     useEffect(() => {
         axios.get("http://localhost:8080/student-manage/list").then(res => {
@@ -135,9 +139,46 @@ function StudentList(props) {
             }
         }
     ];
+    const addFormOK = (item) => {
+        console.log("输入：",item)
+
+        addForm.current.validateFields().then(value => {
+
+            // setisAddVisible(false)
+            //
+            addForm.current.resetFields()//重置字段到init
+            console.log(value.email,value.username,value.mobile,value.classname,value.gender,value.sid)
+            //poSt到后端，生成id 再设置datasource ,方便后面的删除和更新
+            axios.post(`http://localhost:8080/student-manage/add`, {
+                classname: value.classname,
+                email: value.email,
+                gender: value.gender,
+                mobile: value.mobile,
+                sid: value.sid,
+                name: value.username
+            }).then(res => {
+                console.log(res)
+                // setstudentList([...studentList, {
+                //     ...res.data,
+                //     // role: roleList.filter(item => item.id === value.roleId)[0]
+                // }])
+                if (res.data==1){
+                    message.success("成功插入")
+                }else {
+                    message.error("插入失败")
+                }
+            }).catch(err => {
+                message.error("插入失败")
+                console.log(err.data)
+            })
+        }).catch(err => {
+            console.log(err)
+        })
+    }
     return (
         <div>
             <Button type='primary' onClick={() => {
+                setisAddVisible(true)
             }}>添加用户</Button>
             <Table
                 columns={columns}
@@ -147,6 +188,19 @@ function StudentList(props) {
                 dataSource={studentList}
                 rowKey={studentList.key}
             />
+
+            <Modal
+                open={isAddVisible}
+                title="添加学生"
+                okText="确定"
+                cancelText="取消"
+                onCancel={() => {
+                    setisAddVisible(false)
+                }}
+                onOk={() => addFormOK()}
+            >
+                <StudentForm ref={addForm}/>
+            </Modal>
         </div>
     );
 }
