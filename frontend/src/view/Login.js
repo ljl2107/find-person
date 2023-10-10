@@ -20,7 +20,7 @@ export default function Login() {
                 }else{
                     localStorage.setItem("token",JSON.stringify(res.data))
                     console.log("重定向")
-                    navigate('/home')
+                    navigate('/')
                 }
             })
     };

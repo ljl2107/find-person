@@ -64,9 +64,9 @@ function ContentRouter(props) {
                 }
 
                 {/*<Route exact path='/' element={<Navigate path="/" to="/home" />}></Route>*/}
-                {/*{*/}
-                {/*    BackRouteList.length>0 && <Route path="*" element={<NoPermission />} />*/}
-                {/*}*/}
+                {
+                    <Route path="*" element={<NoPermission />} />
+                }
             </Routes>
         // </Spin>
     );

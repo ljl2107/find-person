@@ -12,7 +12,7 @@ function StudentList(props) {
 
     const addForm = useRef(null)
 
-    useEffect(() => {
+    useEffect(() => {   
         axios.get("http://localhost:8080/student-manage/list").then(res => {
             setstudentList(res.data)
         })
@@ -133,8 +133,8 @@ function StudentList(props) {
                 return <div>
                     <Button danger shape="circle" icon={<DeleteTwoTone twoToneColor="red"/>}
                             onClick={() => confirmMethod(item)} disabled={item.default}/>
-                    <Button shape="circle" icon={<UnorderedListOutlined/>}
-                            onClick={() => handleUpdate(item)} disabled={item.default}></Button>
+                    {/*<Button shape="circle" icon={<UnorderedListOutlined/>}*/}
+                    {/*        onClick={() => handleUpdate(item)} disabled={item.default}></Button>*/}
                 </div>
             }
         }
