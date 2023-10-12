@@ -3,7 +3,7 @@ import {
     HomeFilled,
     AppstoreOutlined,
     SearchOutlined,
-    BulbOutlined
+    BulbOutlined, FileImageOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import {connect} from "react-redux";
@@ -16,7 +16,8 @@ const { Header, Sider} = Layout;
 const iconList = {
     '/student-manage/list': <AppstoreOutlined />,
     '/student-manage/find': <SearchOutlined />,
-    '/about': <BulbOutlined />
+    '/about': <BulbOutlined />,
+    '/student-manage/img/find':<FileImageOutlined />
 }
 
 function SideMenu(props) {

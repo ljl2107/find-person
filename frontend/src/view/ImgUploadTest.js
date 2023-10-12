@@ -26,7 +26,7 @@ function ImgUploadTest(props) {
     useEffect(() => {
         axios.get("http://localhost:8080/user-manage/avatar")
             .then(res => {
-                console.log("获取的头像数据",res)
+                // console.log("获取的头像数据",res)
             setImageUrl("data:image/jpeg;base64,"+res.data)
         })
     }, [])
@@ -41,11 +41,12 @@ function ImgUploadTest(props) {
             // Get this url from response in real world.
             getBase64(info.file.originFileObj, (url) => {
                 console.log("info.file.originFileObj",info.file.originFileObj)
-                console.log("url",url)
+                // console.log("url",url)
                 setLoading(false);
                 setImageUrl(url);
             });
         }
+        console.log("dbd头像jg",info.file.response)
     };
     const uploadButton = (
         <div>
@@ -84,9 +85,11 @@ function ImgUploadTest(props) {
                 listType="picture-circle"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://localhost:8080/user-manage/upload/avatar"
+                // action="http://localhost:8080/user-manage/upload/avatar"
+                action="http://localhost:8080/student-manage/imgQuery"
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
+
             >
                 {imageUrl ? (
                     <img

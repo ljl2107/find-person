@@ -7,19 +7,21 @@ import axios from "axios";
 import StudentFind from "./student-manage/StudentFind";
 import StudentList from "./student-manage/StudentList";
 import About from "../../view/About";
+import StudentImgFind from "./student-manage/StudentImgFind";
 
 // ----------------------------------------------------------------
 // --------------------------Routermap start 后续添加也很方便---------------------------------------
 const LocalRouterMap ={
     '/student-manage/find':<StudentFind/>,
     '/student-manage/list':<StudentList/>,
-    '/about':<About/>
+    '/about':<About/>,
+    '/student-manage/img/find':<StudentImgFind/>
 }
 // --------------------------Routermap end 后续添加也很方便---------------------------------------
 // --------------------------start---------------------------------------
 function ContentRouter(props) {
     // console.log("props.isLoading",props.isLoading)
-    // const {role:{rights}} = JSON.parse(localStorage.getItem("token"))
+    const {role} = JSON.parse(localStorage.getItem("token"))
     const [BackRouteList,setRouteList] =  useState([])
     useEffect(()=>{
             axios.get("http://localhost:8080/sidemenu")
@@ -38,6 +40,18 @@ function ContentRouter(props) {
 
     const checkUserPermission = (item) =>{
         // return rights.includes(item.key)
+        if (role == "admin"){
+            console.log("%c欢迎你！管理员！",'color: green;')
+        }
+        else if (role == "user"){
+            console.log("%c欢迎用户！",'color: blue;')
+            if (item.key == '/about' || item.key == '/student-manage/find'){
+                return true;
+            }else {
+                return false;
+            }
+
+        }
         return true;
     }
     // --------------------------验证 end---------------------------------------
@@ -48,15 +62,15 @@ function ContentRouter(props) {
                 {
 
                     BackRouteList.map((item) => {
-                            // if(checkRoute(item) && checkUserPermission(item)){
+                            if(checkUserPermission(item)){
                                 return <Route
                                     path={item.key}
                                     key={item.key}
                                     element={LocalRouterMap[item.key]}
                                 />
-                            // }else{
-                            //     return <Route key={item.key} element={<NoPermission/>}></Route>
-                            // }
+                            }else{
+                                return <Route key={item.key} element={<NoPermission/>}></Route>
+                            }
 
                         }
 

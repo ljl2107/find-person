@@ -17,13 +17,13 @@
         <junit.version>5.9.1</junit.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-    </dependencies>
+<!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>hibernate</groupId>-->
+<!--            <artifactId>hibernate</artifactId>-->
+<!--            <version>3.0.5</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
 
     <build>
         <plugins>
